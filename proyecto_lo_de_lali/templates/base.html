@@ -1,0 +1,153 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block title %}
+      <title>LO DE LALI</title>
+    {% endblock %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="{% static 'img/lo_de_lali_icono.png' %}">
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    
+    
+    <link href="{% static 'css/estilos.css' %} " rel="stylesheet">
+    {% block estilos %}
+    {% endblock estilos %}
+    
+</head>
+
+<body > <!-- style="background-color: rgb(247, 134, 237); " -->
+
+{% if user.is_active %}
+  <ul class="nav nav-tabs"> <!-- style="position: fixed; background-color: rgb(236, 160, 233); width: 100%; font-size: 20px;" -->
+    <li class="nav-item"> <!-- style="margin-left: 5%; padding: 0 40px;" -->
+      <a class="nav-link {% if request.path == '/home/' %} active {% endif %} link-dark" aria-current="page" href="{% url 'inicio' %}">Lo de Lali</a>
+    </li>
+
+    <li class="nav-item dropdown active"> <!-- style="padding: 0 40px;" -->
+      <a class="nav-link dropdown-toggle {% if request.path != '/home/' and request.path != '/accounts/login/' %} active {% endif %}" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Funciones</a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item " href="{% url 'cargar_cuentas' %}">Registro Cliente</a></li>
+        <li><a class="dropdown-item" href="{% url 'lista_clientes' %}">Lista Clientes</a></li>
+        <li><a class="dropdown-item" href="#">Puntos</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Drive Facturas</a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item"> <!-- style="padding: 0 40px;"  -->
+      <a class="nav-link " href="https://docs.google.com/document/d/1Iddex2DRUHHMYTLYTvkQPI2oR8C0OGMLO4F1APuPB7Q/edit?usp=sharing" target="_blank">Lista Precios</a>
+    </li>
+
+    <li class="nav-item dropdown {% if request.path != '/home/' %} active {% endif %}" > <!-- style="padding: 0 40px;" -->
+      <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><strong>Hola {{user.username.capitalize}}!</strong></a>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item " href="{% url 'logout' %}">Cerrar Sesión</a>
+        </li>
+        
+      </ul>
+    </li>
+    
+      
+    
+
+{% else %}
+
+ <ul class="nav nav-tabs navbar-expand-lg">  <!-- style="position: fixed; background-color: rgb(236, 160, 233); width: 100%; " -->
+    <li class="nav-item"> <!--  style="margin-left: 20%; padding: 0 35px;" -->
+      <a class="nav-link {% if request.path == '/home/' %} active {% endif %} link-dark" aria-current="page" href="{% url 'inicio' %}">Lo de Lali</a>
+    </li>
+    
+    <li class="nav-item dropdown" > <!-- style="padding: 0 35px;" -->
+      <a class="nav-link dropdown-toggle {% if request.path != '/home/' and request.path != '/accounts/login/' %} active {% endif %} link-dark" data-bs-toggle="dropdown" href="menu" role="button" aria-expanded="false">Productos</a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item link-dark" href="#">Para Ellas</a></li>
+        <li><a class="dropdown-item link-dark" href="#">Para Ellos</a></li>
+        <li><a class="dropdown-item link-dark" href="#">Calzados</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item link-dark" href="{% url 'todos' %}">Todos los Productos</a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item"> <!--  style="padding: 0 35px;" -->
+      <a class="nav-link {% if request.path == '/accounts/login/' %} active {% endif %} link-dark" href="{% url 'login' %}">Administradores</a>
+    </li>
+
+    
+    
+   
+  </ul>
+
+  <div style="margin-right: 0; position: fixed; right: 0; top: 0;">
+    <button class="btn btn-outline-dark float-right" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Mi carrito</button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        ...
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+<br> 
+
+  
+
+
+
+  <!-- BLOQUE DE CONTENIDO -->
+
+  <div class="content container">    
+    {% block content %}
+    {% endblock %}
+  </div>
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+ 
+
+
+<footer>
+
+  <section> 
+    
+    <div><a href="https://www.facebook.com/lodelali.machagai" class="fa fa-facebook-f" ></a><a href="https://www.instagram.com/lodelalimachagai/" class="fa fa-instagram"></a><a href="https://wa.me/5493734516121" class="fa fa-whatsapp" ></a></div> <!-- style="margin-left: -1px;" -->
+    <span style="color:black;">By <a href="https://www.linkedin.com/in/carlos-rudaz-022b0b121/" target="_blank">Carlos Rudaz</a></span>
+    
+    
+  </section>
+
+</footer>
+
+
+</html>

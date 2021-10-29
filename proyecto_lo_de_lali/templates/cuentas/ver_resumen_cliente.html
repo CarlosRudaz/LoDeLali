@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Resumen {{cliente.nombre}}</title>
+{% endblock %}
+
+
+
+{% block content %}
+
+<h1 style="margin-top: 30px;">Resumen {{cliente.nombre.capitalize}}</h1>
+<div class="lista_cuentas"> 
+    
+    
+    <h3> Celular: {{cliente.celular}} </h3>
+    {% if cliente.total > 0 %}
+        <h3>Total Deuda: ${{cliente.total}}</h3>
+    {% else %}
+        <h3>Sin Deuda</h3>
+        <h3>Saldo a favor: ${{cliente.total}}</h3>
+    {% endif %}
+    
+
+
+    <table border="1" class="table">
+        <tr>
+            <th>Fecha</th>
+            
+            <th>Productos</th> 
+            <th>Precio</th>
+            <th>Total</th>
+            <th>Entrega</th>
+            <th>Saldo</th>
+        </tr>
+        
+        {% for x in datos %}
+
+            
+
+            {% if cliente.total > 0  %}
+                <tr>
+                    
+                    {% if "Entrega" in x.producto or "entrega" in x.producto %}
+                        <td style="background-color: rgb(187, 186, 186);">{{x.fecha|date:'d-m-Y'}}</td>
+                        <td style="background-color: rgb(187, 186, 186);">{{x.producto}}</td>
+                        <td style="background-color: rgb(187, 186, 186);">{{x.venta}}</td>
+                        <td style="background-color: rgb(187, 186, 186);">{{x.total}}</td>
+                        <td style="background-color: rgb(187, 186, 186);">{{x.entrega}}</td>
+                        <td style="background-color: rgb(187, 186, 186);">${{x.saldo}}</td>
+                    {% else %}
+                        <td>{{x.fecha|date:'d-m-Y'}}</td>
+                        <td>{{x.producto}}</td>
+                        <td>{{x.venta}}</td>
+                        <td>{{x.total}}</td>
+                        <td>{{x.entrega}}</td>
+                        <td>${{x.saldo}}</td>
+                    {% endif %}
+                    
+                </tr>
+            {% else %} 
+                <tr>
+                    
+                </tr>
+            {% endif %}
+
+            
+            
+        {% endfor %}
+        
+    </table>
+
+    
+
+</div>
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group me-2" role="group" aria-label="First group">
+        {% if datos.has_previous %}
+            <button type="button" class="btn btn-outline-dark"><a href="?page=1">&laquo;</a></button>
+
+            <button type="button" class="btn btn-outline-dark"><a href="?page={{ datos.previous_page_number }}">{{ datos.previous_page_number }} </a></button>
+
+        {% endif %}
+
+        
+        <button type="button" class="btn btn-outline-dark">{{ datos.number }}</button>
+       
+
+        {% if datos.has_next %}
+            
+            <button type="button" class="btn btn-outline-dark"><a href="?page={{ datos.next_page_number }}">{{ datos.next_page_number }} </button></a>
+            <button type="button" class="btn btn-outline-dark"><a href="?page={{ datos.paginator.num_pages }}">&raquo;</a></button>
+
+            
+        {% endif %}
+    </div>
+</div>
+
+
+
+{% endblock %}

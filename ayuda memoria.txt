@@ -1,0 +1,4 @@
+cuando modificamos alguna app y el makemigrations no nos reconoce los cambios. sincroniza la base de datos
+python manage.py migrate --run-syncdb
+
+

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Iniciar Sesión </title> 
+{% endblock title %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            Verifique los datos ingresados. ¡Hay errores!
+        </div>
+    {% endif %}
+
+    <h1> Iniciar Sesión </h1> 
+
+    <form method="post"> 
+    {% csrf_token%}
+        <div class="mb-3">
+            <input type="text" class="form-control" name="username" placeholder="Nombre de Usuario" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+        </div>
+            
+        <div class="mb-3">
+            <input type="password" class="form-control" name="password" placeholder="Contraseña" autocomplete="current-password" required="" id="id_password">
+        </div>
+        
+        <input type="submit" class="btn btn-primary" value="Identificarse">
+
+    </form>
+
+{% endblock content %}
+
+

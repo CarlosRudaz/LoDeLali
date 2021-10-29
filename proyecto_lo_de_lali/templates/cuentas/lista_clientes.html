@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Lista Clientes</title>
+    
+{% endblock %}
+
+{% block content %}
+
+
+{% if messages %}
+    <div class="alert alert-success" role="alert">
+        {% for message in messages %}
+            <div style="text-align: center; ">{{ message }}</div> <!-- Ver en viws método para pasar mensajes de alerta -->
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% block buscar %}
+<div class="div_registro">
+    <form  method="GET"> <!-- style="padding: 8px 20px;" -->
+        <div id="custom-search-input">
+            <input class="form-control" style="text-align: center;" type="text" placeholder="Buscar Cliente..." aria-label="Search" name="buscar" value="{{ request.GET.buscar}}">            
+        </div>           
+    </form>
+</div>
+{% endblock buscar %}
+
+<h1 style="border-bottom: black solid 2px;">Clientes</h1> 
+
+<table border="1" class="table" style="text-align: center; margin-left: auto; margin-right: auto; width: 80%; font-family: Calibri;">
+    
+    <tr>
+        <th class="table-primary">Id</th>
+        <th class="table-primary" style="width: 230px;">Nombre Cliente</th>
+        <th class="table-primary">Celular</th>
+        <th class="table-primary">Fecha Alta</th>
+        <th class="table-primary">Opciones</th>
+    </tr>
+    
+    {% for cliente in cuentas %}
+        <tr>
+            <td class="table-danger">{{cliente.id_cliente}}</td>
+            <td class="table-danger" style="text-align:left;"><a href="{% url 'ver_resumen' cliente.id_cliente %}">{{cliente.nombre|upper}}</a></td>    
+            <td class="table-danger">{{cliente.celular}}</td>
+            <td class="table-danger">{{cliente.fecha|date:'d-m-Y'}}</td>
+            <td class="table-danger"> 
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <a href="{% url 'cargar_resumen' cliente.id_cliente %}"><button type="button" class="btn btn-success" style="background-color: rgb(130, 236, 130, .7);">✓</button></a>
+                </div>
+                <!-- <button class="btn btn-primary" style="background-color: rgb(191, 224, 245);" type="button"><a href="{% url 'cargar_resumen' cliente.id_cliente %}">Venta/entrega</a></button> -->
+            </td> 
+        </tr>
+    {% endfor %}    
+</table>
+
+<h1 style="border-bottom: black solid 2px;">Clientes sin saldos</h1> 
+<table border="1" class="table" style="text-align: center; margin-left: auto; margin-right: auto; width: 80%; font-family: Calibri;">
+    <caption>Carlos Rudaz</caption> <!-- ESTO ES PARA PONER COMENTARIO DEBAJO DE LA TABLA-->
+    <tr>
+        <th class="table-primary">Id</th>
+        <th class="table-primary">Nombre Cliente</th>
+        <th class="table-primary">Celular</th>
+        <th class="table-primary">Fecha Alta</th>
+        <th class="table-primary">Opciones</th>
+    </tr>
+    
+    {% for cliente in cuentas2 %}
+        <tr>
+            <td class="table-danger">{{cliente.id_cliente}}</td>
+            <td class="table-danger"><a href="{% url 'ver_resumen' cliente.id_cliente %}">{{cliente.nombre|upper}}</a></td>    
+            <td class="table-danger">{{cliente.celular}}</td>
+            <td class="table-danger">{{cliente.fecha|date:'d-m-Y'}}</td>
+            <td class="table-danger"> 
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <a href="{% url 'eliminar_cuenta' cliente.id_cliente %}" style="font-family: Calibri;"><button type="button" class="btn btn-danger" style=" width: 40px; background-color: rgba(236, 130, 130, 0.7);">X</button></a>
+                    <a href="{% url 'cargar_resumen' cliente.id_cliente %}"><button type="button" class="btn btn-success" style="width: 40px; background-color: rgb(130, 236, 130, .7);">✓</button></a>
+                </div>
+                <!-- <button class="btn btn-primary" style="background-color: rgb(191, 224, 245);" type="button"><a href="{% url 'cargar_resumen' cliente.id_cliente %}">Venta/entrega</a></button> -->
+            </td> 
+        </tr>
+    {% endfor %}    
+</table>
+
+<style>
+    .table a{
+        text-decoration: none;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>CARGAR RESUMEN</title>
+{% endblock %}
+
+
+{% block content %}
+    
+    {% if error %}
+        <div class="alert alert-danger" role="alert" style="text-align: center;">
+            Verifique los datos ingresados. ¡Hay errores!
+        </div>
+    {% endif %}
+    
+    <h1>Nueva Compra</h1>
+     
+    <!-- <form method="POST" style="padding: 10px;" class="form" >
+        {% csrf_token %}
+
+        {% if mensaje %}
+            <div class="alert alert-primary" role="alert">
+                ¡Cuenta registrada exitosamente!
+            </div>
+        {% endif %}
+
+        
+
+        {{form|crispy}}
+
+        <button type="submit" class="btn btn-light" style="margin-top: 25px;">Registrar</button>
+
+    </form>
+ -->
+    <form method="POST" style="padding: 10px;" class="form">
+        {% csrf_token %}
+
+        <div> <!-- id="div_id_id_cliente" style="margin: 20px;" -->
+            <select name="cliente" required="" id="id_cliente">
+                <option value={{cliente.id_cliente}} selected={{cliente.id_cliente}}>{{cliente}}</option>
+            </select>
+            <h2>Saldo ${{cliente.total}}</h2>
+        </div>
+
+        <div>  <!-- id="div_id_producto" class="form-group" -->
+            <label for="id_producto" class="requiredField">Productos<span class="asteriskField">*</span> </label> 
+            <div class=""> 
+                <input type="text" name="producto" maxlength="200" class="textinput textInput form-control" id="id_producto" required> 
+            </div> 
+        </div>
+
+        <div> <!--  id="div_id_venta" class="form-group" -->
+            <label for="id_venta">Venta<span class="asteriskField">*</span> </label> 
+            <div class=""> 
+                <input type="number" name="venta" value="0" step="any" class="numberinput form-control" required="" id="id_venta"> 
+            </div> 
+        </div>
+
+        <div>  <!--  id="div_id_entrega" class="form-group" -->
+            <label for="id_entrega">Entrega</label> 
+            <div> 
+                <input type="number" name="entrega" value="0" step="any" class="numberinput form-control" id="id_entrega"> 
+            </div> 
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar</button> <!--  style="margin-top: 25px;" -->
+    </form>
+
+{% endblock %}
